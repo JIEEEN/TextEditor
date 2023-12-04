@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <TextController.h>
+#include "spdlog/spdlog.h"
 
 // #include "common.h"
 
@@ -9,6 +10,7 @@ int main(){
 
     TextController textController(window);
     // KeyController keyController(window);
+
 
     while(window.isOpen()){
         sf::Event event;
@@ -20,6 +22,7 @@ int main(){
             if(event.type == sf::Event::TextEntered){
                 textController.textProcess(window, event);
             }
+
         }
 
         textController.setFontSize(13);

@@ -47,6 +47,11 @@ void TextController::textProcess(sf::RenderWindow& window, sf::Event& event){
                 this->cursor.setCursorIndexX(this->cursor.getCursorIndexX()-1);
                 this->cursor.moveCursorShape(this->char_width, this->num_linefeed);
             }
+        }else if(event.text.unicode == '\t'){
+            this->inputText += '\t';
+
+            this->cursor.setCursorIndexX(this->cursor.getCursorIndexX()+4); // 4 <- hardcoding
+            this->cursor.moveCursorShape(this->char_width, this->num_linefeed);
         }else if(event.text.unicode == '\n'){
             this->inputText += '\n';
             this->num_linefeed += 1;
