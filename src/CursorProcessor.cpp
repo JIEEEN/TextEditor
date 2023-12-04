@@ -7,6 +7,9 @@ void CursorProcessor::setCursorIndexX(uint32_t idx){
 void CursorProcessor::setCursorIndexY(uint32_t idx){
     this->cursor_index_y = idx;
 }
+void CursorProcessor::setCursorColor(sf::Color color){
+    this->cursor_shape.setFillColor(color);
+}
 
 uint32_t CursorProcessor::getCursorIndexX() const{
     return this->cursor_index_x;
@@ -24,5 +27,21 @@ void CursorProcessor::drawCursor(sf::RenderWindow& window){
 }
 
 void CursorProcessor::cursorToggle(){
-    this->cursor_shape.setFillColor()
+    auto check_point = std::chrono::high_resolution_clock::now();
+
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(check_point - this->toggle_timer);
+    sf::Color current_color = this->cursor_shape.getFillColor();
+
+    if(duration.count() > 500){
+        if(current_color == sf::Color::White){
+            this->cursor_shape.setFillColor(sf::Color::Black);
+        }else this->cursor_shape.setFillColor(sf::Color::White);
+
+        this->toggle_timer = std::chrono::high_resolution_clock::now();
+    }
 } 
+
+void CursorProcessor::resetToggleTimer(){
+    this->toggle_timer = std::chrono::high_resolution_clock::now();
+    this->setCursorColor(sf::Color::Black);
+}

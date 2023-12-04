@@ -17,6 +17,7 @@ TextController::TextController(sf::RenderWindow& window): num_linefeed(0), input
 void TextController::draw(sf::RenderWindow& window){
     window.draw(*this->text);
     this->cursor.drawCursor(window);
+    this->cursor.cursorToggle();
 }
 
 void TextController::setFontSize(const int& font_size){
@@ -29,6 +30,8 @@ void TextController::setFontColor(sf::Color color){
 
 void TextController::textProcess(sf::RenderWindow& window, sf::Event& event){
     if(event.text.unicode < 128){
+        this->cursor.resetToggleTimer();
+        
         if(event.text.unicode == '\b' && !this->inputText.empty()){ // backspace
             const char erased_char = this->inputText.back();
             this->inputText.pop_back();
