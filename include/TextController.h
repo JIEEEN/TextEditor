@@ -14,8 +14,10 @@ class TextController{
 
         sf::Font font;
         std::unique_ptr<sf::Text> text;
+
         std::string inputText;
-        std::vector<std::string> text_buffer;
+        std::vector<uint32_t> line_width;
+
         CursorProcessor cursor;
     public:
         TextController(sf::RenderWindow&);

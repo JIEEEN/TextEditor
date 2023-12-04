@@ -31,17 +31,27 @@ void TextController::setFontColor(sf::Color color){
 void TextController::textProcess(sf::RenderWindow& window, sf::Event& event){
     if(event.text.unicode < 128){
         this->cursor.resetToggleTimer();
-        
+
         if(event.text.unicode == '\b' && !this->inputText.empty()){ // backspace
             const char erased_char = this->inputText.back();
             this->inputText.pop_back();
+            if(erased_char == '\n'){
+                this->cursor.setCursorIndexX(this->line_width.back());
+                this->cursor.setCursorIndexY(this->cursor.getCursorIndexY()-1);
 
-            this->cursor.setCursorIndexX(this->cursor.getCursorIndexX()-1);
-            this->cursor.moveCursorShape(this->char_width, this->num_linefeed);
+                this->num_linefeed -= 1;
+                this->cursor.moveCursorShape(this->char_width, this->num_linefeed);
+                this->line_width.pop_back();
+            }
+            else{
+                this->cursor.setCursorIndexX(this->cursor.getCursorIndexX()-1);
+                this->cursor.moveCursorShape(this->char_width, this->num_linefeed);
+            }
         }else if(event.text.unicode == '\n'){
             this->inputText += '\n';
-            this->text_buffer.push_back(this->inputText);
             this->num_linefeed += 1;
+
+            this->line_width.push_back(this->cursor.getCursorIndexX());
 
             this->cursor.setCursorIndexX(0);
             this->cursor.setCursorIndexY(this->cursor.getCursorIndexY()+1);

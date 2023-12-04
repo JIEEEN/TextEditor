@@ -8,6 +8,7 @@ int main(){
     sf::RenderWindow window(sf::VideoMode(800, 600), "text");
 
     TextController textController(window);
+    // KeyController keyController(window);
 
     while(window.isOpen()){
         sf::Event event;
