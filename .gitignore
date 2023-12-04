@@ -35,3 +35,4 @@
 # EDIT
 build/
 assets/
+.vscode/

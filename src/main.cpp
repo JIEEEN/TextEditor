@@ -17,7 +17,7 @@ int main(){
                 window.close();
 
             if(event.type == sf::Event::TextEntered){
-                textController.textProcess(event);
+                textController.textProcess(window, event);
             }
         }
 

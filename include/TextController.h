@@ -8,11 +8,15 @@
 
 class TextController{
     private:
+        uint32_t num_linefeed;
+        uint8_t line_height;
+        float_t char_width;
+
         sf::Font font;
         std::unique_ptr<sf::Text> text;
         std::string inputText;
+        std::vector<std::string> text_buffer;
         CursorProcessor cursor;
-        
     public:
         TextController(sf::RenderWindow&);
         ~TextController(){};
@@ -20,7 +24,7 @@ class TextController{
         void draw(sf::RenderWindow&);
         void setFontSize(const int&);
         void setFontColor(sf::Color);
-        void textProcess(sf::Event&);
+        void textProcess(sf::RenderWindow&, sf::Event&);
 };
 
 #endif // __TEXT_CONTROLLER_

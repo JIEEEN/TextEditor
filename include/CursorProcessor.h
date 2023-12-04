@@ -1,17 +1,42 @@
 #ifndef __CURSOR_PROCESSOR_
 #define __CURSOR_PROCESSOR_
 
+#include <SFML/Graphics.hpp>
 #include <common.h>
+
 
 class CursorProcessor{
     private:
-        uint64_t cursor_index;
+        uint8_t cursor_offset_x;
+        uint8_t cursor_offset_y;
+
+        uint32_t cursor_index_x;
+        uint32_t cursor_index_y;
+
+        const uint8_t cursor_width;
+        const uint8_t cursor_height;
+
+        sf::RectangleShape cursor_shape;
     public:
-        CursorProcessor(): cursor_index(0){};
+        CursorProcessor(uint32_t x_idx, uint32_t y_idx, uint8_t c_w, uint8_t c_h):
+            cursor_offset_x(10),
+            cursor_offset_y(10),
+            cursor_index_x(0),
+            cursor_index_y(0),
+            cursor_width(c_w),
+            cursor_height(c_h){
+                this->cursor_shape.setSize(sf::Vector2f(c_w, c_h));
+                this->cursor_shape.setFillColor(sf::Color::Black);
+                this->cursor_shape.setPosition(10, 10);
+            };
         ~CursorProcessor(){};
-        uint64_t getCursorIndex();
-        void drawCursor();
-        void drawCursorArea();
-}
+        void setCursorIndexX(uint32_t);
+        void setCursorIndexY(uint32_t);
+        uint32_t getCursorIndexX() const;
+        uint32_t getCursorIndexY() const;
+        void moveCursorShape(float_t, uint32_t);
+        void drawCursor(sf::RenderWindow& window);
+        void cursorToggle();
+};
 
 #endif // __CURSOR_PROCESSOR_

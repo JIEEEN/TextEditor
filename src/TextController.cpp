@@ -1,18 +1,22 @@
 #include <TextController.h>
 
-TextController::TextController(sf::RenderWindow& window): inputText("") {
-    if (!this->font.loadFromFile("/Users/jin/Desktop/sfml/assets/OpenSans-Light.ttf")) {
+TextController::TextController(sf::RenderWindow& window): num_linefeed(0), inputText(""), cursor(0, 0, 8, 15){
+    if (!this->font.loadFromFile("/Users/jin/Desktop/TED/assets/DejaVuSansMono.ttf")) {
         std::cerr << "FILE OPEN FAILED" << std::endl;
         exit(EXIT_FAILURE);
     }
 
-    this->text = std::unique_ptr<sf::Text>(new sf::Text("TEST", font, 16)); // 에러 발생하는 부분
+    this->text = std::unique_ptr<sf::Text>(new sf::Text("TEST", font, 15)); 
     this->text->setFillColor(sf::Color::Black);
     this->text->setPosition(10, 10);
+
+    this->text->setString("_");
+    this->char_width = this->text->getLocalBounds().width;
 }
 
 void TextController::draw(sf::RenderWindow& window){
     window.draw(*this->text);
+    this->cursor.drawCursor(window);
 }
 
 void TextController::setFontSize(const int& font_size){
@@ -23,17 +27,31 @@ void TextController::setFontColor(sf::Color color){
     this->text->setFillColor(color);
 }
 
-void TextController::textProcess(sf::Event& event){
+void TextController::textProcess(sf::RenderWindow& window, sf::Event& event){
     if(event.text.unicode < 128){
-        if(event.text.unicode == '\b' && !inputText.empty()){
-            inputText.pop_back();
-        }else if(event.text.unicode == 13){
-            inputText += '\n';
+        if(event.text.unicode == '\b' && !this->inputText.empty()){ // backspace
+            const char erased_char = this->inputText.back();
+            this->inputText.pop_back();
+
+            this->cursor.setCursorIndexX(this->cursor.getCursorIndexX()-1);
+            this->cursor.moveCursorShape(this->char_width, this->num_linefeed);
+        }else if(event.text.unicode == '\n'){
+            this->inputText += '\n';
+            this->text_buffer.push_back(this->inputText);
+            this->num_linefeed += 1;
+
+            this->cursor.setCursorIndexX(0);
+            this->cursor.setCursorIndexY(this->cursor.getCursorIndexY()+1);
+            this->cursor.moveCursorShape(this->char_width, this->num_linefeed);
         }else{
-            inputText += static_cast<char>(event.text.unicode);
+            char new_char = static_cast<char>(event.text.unicode);
+            this->inputText += new_char;
+
+            this->cursor.setCursorIndexX(this->cursor.getCursorIndexX()+1);
+            this->cursor.moveCursorShape(this->char_width, this->num_linefeed);
         }
 
-        this->text->setString(inputText);
+        this->text->setString(this->inputText);
     }
 }
 
