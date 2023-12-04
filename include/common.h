@@ -5,5 +5,6 @@
 #include <string>
 #include <memory>
 #include <chrono>
+#include "spdlog/spdlog.h"
 
 #endif // __COMMON_H_

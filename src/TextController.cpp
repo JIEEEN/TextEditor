@@ -1,6 +1,8 @@
 #include <TextController.h>
 
 TextController::TextController(sf::RenderWindow& window): num_linefeed(0), inputText(""), cursor(0, 0, 8, 15){
+    spdlog::info("Create TextController.");
+
     if (!this->font.loadFromFile("/Users/jin/Desktop/TED/assets/DejaVuSansMono.ttf")) {
         std::cerr << "FILE OPEN FAILED" << std::endl;
         exit(EXIT_FAILURE);

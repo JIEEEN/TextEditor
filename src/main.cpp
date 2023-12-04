@@ -1,6 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <TextController.h>
-#include "spdlog/spdlog.h"
+#include <KeyController.h>
 
 // #include "common.h"
 
@@ -10,7 +10,6 @@ int main(){
 
     TextController textController(window);
     // KeyController keyController(window);
-
 
     while(window.isOpen()){
         sf::Event event;
@@ -23,6 +22,14 @@ int main(){
                 textController.textProcess(window, event);
             }
 
+            // switch(event.type){
+            //     case sf::Event::Closed:
+            //         window.close();
+            //     case sf::Event::TextEntered:
+            //         textController.textProcess(window, event);
+            //     case sf::Event::KeyPressed:
+            //         keyController.keyProcess(window, event);
+            // }
         }
 
         textController.setFontSize(13);

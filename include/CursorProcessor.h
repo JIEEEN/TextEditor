@@ -28,11 +28,14 @@ class CursorProcessor{
             cursor_height(c_h),
             toggle_timer(std::chrono::high_resolution_clock::now())
             {
+                spdlog::info("Create CursorProcessor.");
                 this->cursor_shape.setSize(sf::Vector2f(c_w, c_h));
                 this->cursor_shape.setFillColor(sf::Color::Black);
                 this->cursor_shape.setPosition(10, 10);
             };
-        ~CursorProcessor(){};
+        ~CursorProcessor(){
+            spdlog::info("Delete CursorProcessor.");
+        };
         void setCursorIndexX(uint32_t);
         void setCursorIndexY(uint32_t);
         void setCursorColor(sf::Color);

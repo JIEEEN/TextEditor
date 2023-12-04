@@ -3,7 +3,6 @@
 
 #include <SFML/Graphics.hpp>
 #include <CursorProcessor.h>
-
 #include <common.h>
 
 class TextController{
@@ -21,7 +20,9 @@ class TextController{
         CursorProcessor cursor;
     public:
         TextController(sf::RenderWindow&);
-        ~TextController(){};
+        ~TextController(){
+            spdlog::info("Delete TextController.");
+        };
 
         void draw(sf::RenderWindow&);
         void setFontSize(const int&);
