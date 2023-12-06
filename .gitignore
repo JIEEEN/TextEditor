@@ -36,3 +36,4 @@
 build/
 assets/
 .vscode/
+*.txt

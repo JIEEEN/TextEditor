@@ -19,7 +19,7 @@ class TextController{
 
         CursorProcessor cursor;
     public:
-        TextController(sf::RenderWindow&);
+        TextController();
         ~TextController(){
             spdlog::info("Delete TextController.");
         };
@@ -28,6 +28,7 @@ class TextController{
         void setFontSize(const int&);
         void setFontColor(sf::Color);
         void textProcess(sf::RenderWindow&, sf::Event&);
+        const std::string& getInputText() const;
 };
 
 #endif // __TEXT_CONTROLLER_

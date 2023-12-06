@@ -1,6 +1,6 @@
 #include <TextController.h>
 
-TextController::TextController(sf::RenderWindow& window): num_linefeed(0), inputText(""), cursor(0, 0, 8, 15){
+TextController::TextController(): num_linefeed(0), inputText(""), cursor(0, 0, 8, 15){
     spdlog::info("Create TextController.");
 
     if (!this->font.loadFromFile("/Users/jin/Desktop/TED/assets/DejaVuSansMono.ttf")) {
@@ -45,6 +45,11 @@ void TextController::textProcess(sf::RenderWindow& window, sf::Event& event){
                 this->cursor.moveCursorShape(this->char_width, this->num_linefeed);
                 this->line_width.pop_back();
             }
+            else if(erased_char == '\t'){
+                this->cursor.setCursorIndexX(this->cursor.getCursorIndexX()-4);
+                
+                this->cursor.moveCursorShape(this->char_width, this->num_linefeed);
+            }
             else{
                 this->cursor.setCursorIndexX(this->cursor.getCursorIndexX()-1);
                 this->cursor.moveCursorShape(this->char_width, this->num_linefeed);
@@ -73,6 +78,10 @@ void TextController::textProcess(sf::RenderWindow& window, sf::Event& event){
 
         this->text->setString(this->inputText);
     }
+}
+
+const std::string& TextController::getInputText() const{
+    return this->inputText;
 }
 
 
