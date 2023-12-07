@@ -5,11 +5,14 @@
 #define KEYPRESSED 1
 #define KEYRELEASED 0
 
+#define FILE_NAME "test.txt"
+#define DEFAULT_WIDTH 800
+#define DEFAULT_HEIGHT 600
+#define FONT_SIZE 13
+
 enum class KeyMsg{
     SAVE,
     SAVE_ANOTHER_NAME,
-
-
     NONE
 };
 
